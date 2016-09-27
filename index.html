@@ -1,50 +1,140 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Printing and PDF exports -->
+    <script>
+     var link = document.createElement( 'link' );
+     link.rel = 'stylesheet';
+     link.type = 'text/css';
+     link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+     document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+	<section>Ember Addon Strategies and Best Practices</section>
+	<section>
+          <h4>Anatomy of an Addon</h4>
+          <ul>
+            <li>Include Ember classes and make them available to parent app</li>
+            <li>Include new assets and make them part of the build pipeline</li>
+            <li>Use blueprints to generate new files</li>
+          </ul>
+        </section>
+        <section>
+          <h4>When to Addonize?</h4>
+          <ul>
+            <li>When you need assets from your parent</li>
+            <li>When you think assets you are creating would be well served elsewhere</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Our Strategy</h4>
+          <ul>
+            <li>ember-purecloud-components to be the main addon designed for engine usage</li>
+            <li>Treating it as Interal Open Source (Core Team, Collaborators)</li>
+            <li>PR components, assets you need to the repo</li>
+            <li>go off reservation to Public OSS via</li>
+          </ul>
+          <img src="images/sample-addon-hierarchy.png" height="250px"/>
+        </section>
+        <section>
+          <h4>Avoiding Circular Dependencies</h4>
+          <p>Not a good thing</p>
+          <img src="images/circular-deps.png" height="300px"/>
+        </section>
+        <section>
+          <h4>Treat Boundaries as APIs</h4>
+          <p>Use Semver</p>
+          <img src="images/semver-summary.png"/>
+          <a href="http://semver.org">http://semver.org</a>
+        </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+        <section>
+          <h4>PureCloud Component Standards</h4>
+          <ul>
+            <li>Tests</li>
+            <li>Documentation</li>
+            <li>Modularity</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Freestyle Intro</h4>
 
-		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				history: true,
+          <ul>
+            <li>ember serve on the addon</li>
+            <li>navigate to localhost:4200/freestyle</li>
+          </ul>
+          <img src="images/freestyle.png"/>
+        </section>
+        <section>
+          <h4>Coming Soon!</h4>
+          <ul>
+            <li>Build</li>
+            <li>Jira</li>
+            <li>Tree-shaking</li>
+            <li>Common Styles</li>
+            <li>Styleguide Deployment</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Broccoli from 10,000 Feet</h4>
+          <img src="images/broccoli-tree.png"/>
+          <img alt="" src="images/command-line.png"/>
+        </section>
+        <section>
+          <h4>Tips to Componentizing in addons</h4>
+          <ul>
+            <li>Push up services in favor of data binding/closure actions</li>
+            <li>Keep styles local to components, leverage common css variables (coming soon)</li>
+            <li>use the default blueprint for bower dependencies</li>
+            <li>use the included hook in index.js to import non-standard files to ember</li>
+            <li>put public files in /public, access them in parent app with via the addon name</li>
+            <li>if you insert into the pipleline (using broccoli hooks), you can view generated and intermediate data in tmp once the server is started.  Also See <a href="https://github.com/stefanpenner/broccoli-stew">Broccoli Stew</a>}</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Links</h4>
+          <ul>
+            <li><a href="https://ember-cli.com/">Main Documentation Website - https://ember-cli.com</a></li>
+            <li><a href="https://pixelhandler.com/posts/developing-ember-addons-next-generation-css-with-postcss">Next Generation CSS with postCSS - https://pixelhandler.com/posts/developing-ember-addons-next-generation-css-with-postcss</a></li>
+            <li><a href="http://emberup.co/ember-addon-secrets/">Ember Addon Secrets - http://emberup.co/ember-addon-secrets/</a></li>
+            <li><a href="https://ember-cli.com/api/classes/Addon.html">Ember CLI Addon Hooks - https://ember-cli.com/api/classes/Addon.html</a></li>
+            <li><a href="https://youtu.be/hNwgp9alwKg?list%3DPL4eq2DPpyBblc8aQAd516-jGMdAhEeUiW">Dissecting an Ember CLI Build (EmberConf) - https://youtu.be/hNwgp9alwKg?list%3DPL4eq2DPpyBblc8aQAd516-jGMdAhEeUiW</a></li>
+          </ul>
+        </section>
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+     // More info https://github.com/hakimel/reveal.js#configuration
+     Reveal.initialize({
+       history: true,
+
+       // More info https://github.com/hakimel/reveal.js#dependencies
+       dependencies: [
+	 { src: 'plugin/markdown/marked.js' },
+	 { src: 'plugin/markdown/markdown.js' },
+	 { src: 'plugin/notes/notes.js', async: true },
+	 { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+       ]
+     });
+    </script>
+  </body>
 </html>
